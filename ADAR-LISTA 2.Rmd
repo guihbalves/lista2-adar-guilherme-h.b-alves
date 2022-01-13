@@ -1,0 +1,442 @@
+---
+title: "Lista2-adar-guilherme-h.b-alves"
+author: "Guilherme Hagemann Behling Alves"
+date: "12/01/2022"
+output: html_document
+---
+
+```{r}
+# Questão 1
+x=seq(3,6,by=0.1)
+vetor=exp(x)*cos(x)
+vetor
+```
+
+```{r}
+# Questão 2
+
+# a
+exp1=seq(3,36,by=3)
+exp2=seq(1,34,by=3)
+vetor_a = 0.1^(exp1) * 0.2^(exp2)
+vetor_a
+
+# b
+i=1:25
+vetor_b = (2^i)/i
+vetor_b
+```
+
+
+```{r}
+# Questão 3
+dds <- c(domingo = 1, 
+         segunda = 2, 
+         terça = 3,
+         quarta = 4,
+         quinta = 5,
+         sexta = 6,
+         sabado = 7)
+dds
+```
+
+
+```{r}
+# Questão 4 (usa a 3 como base)
+dds_nums <- c(
+  5L, 2L, 5L, 2L, 7L, 7L, 2L,
+  6L, 6L, 3L, 7L, 1L, 2L, 2L,
+  5L, 7L, 3L, 2L, 6L, 4L, 1L
+)
+names(dds)[dds_nums]
+```
+
+
+```{r}
+# Questão 5
+numeros=c(85, 79, 70, 6, 32, 8, 17, 93, 81, 76)
+vetor_pares=numeros[numeros %% 2 == 0]
+n_impares=length(numeros[numeros %% 2 == 1])
+n_impares
+```
+
+
+```{r}
+# Questão 6
+# a
+anos=c(1894, 1947, 1901, 1992, 1925, 2014, 1993, 1996, 1984, 1897, 2100, 2300)
+anos4=anos[anos %% 4 == 0]
+anos100=anos[anos %% 100 != 0]
+anos400=anos[anos %% 400 == 0]
+
+# b
+anos4; anos100; anos400 #1984, 1992 e 1996 são anos bissextos
+bis=Reduce(intersect, list(anos4,anos100)) 
+bis
+
+# c
+ndias=(anos==bis)+365
+ndias
+
+# d
+anos_d=cbind(ndias,anos)
+for (i in 1:12) {
+  if (ndias[i]==366){
+    print(anos[i])
+  }
+}
+```
+
+
+```{r}
+# Questão 7
+# a
+c(-30,seq(0,30,by=5))
+
+# b
+seq(1,0,by=-0.2)
+
+# c
+seq(-pi, pi, length.out = 10)
+
+# d
+c(rep(-1,2),rep(0,3),rep(1,4),rep(2,5),rep(3,6),rep(4,7),rep(5,8))
+
+# e
+c(rep(5,5),
+  rep(4,4),
+  rep(3,3),
+  rep(2,2),
+  rep(1,1),
+  rep(2,2),
+  rep(3,3),
+  rep(4,4),
+  rep(5,5))
+```
+
+
+```{r}
+# Questão 8
+# a
+v3=c(11,0.25,7,2)
+seq(v3)
+
+# b
+v2=c(11,0.25)
+seq(v2)
+
+# c
+v1=c(11)
+length(v1)
+
+# d
+v0=NULL
+seq(v0)
+
+```
+
+
+```{r}
+# Questão 9
+tar_est1 <- c(
+  14.92, 14.61, 14.32, 14.07, 13.84, 13.65, 13.56, 13.97, 15.08,
+  16.5, 17.88, 19.08, 20.02, 20.66, 21.01, 21.05, 20.76, 20.05,
+  18.77, 17.51, 16.67, 16.11, 15.66, 15.27
+)
+tar_est2 <- c(
+  13.13, 13.01, 12.93, 12.87, 12.82, 12.81, 13.2, 14.22, 15.77,
+  17.49, 19.2, 20.57, 21.49, 22.01, 22.03, 21.71, 20.84, 18.77,
+  16.54, 15.13, 14.34, 13.81, 13.49, 13.28
+)
+# a
+tmed_est1=round(mean(tar_est1),1)
+tmed_est2=round(mean(tar_est2),1)
+
+# b
+sum(tar_est1 > tar_est2) #est1 é mais quente
+sum(tar_est2 > tar_est1) #est2 é mais quente
+
+# c
+sort(tar_est1, decreasing = TRUE)[3]
+sort(tar_est2, decreasing = TRUE)[3]
+
+# d
+atd_est1 = round(max(tar_est1)-min(tar_est1),1)
+atd_est2 = round(max(tar_est2)-min(tar_est2),1)
+
+# e
+# Método de resolução 1 
+horas=0:23
+hora=horas
+
+hora[which(tar_est1 == max(tar_est1))]; tar_est1[which(tar_est1 == max(tar_est1))]
+hora[which(tar_est1 == min(tar_est1))]; tar_est1[which(tar_est1 == min(tar_est1))]
+
+hora[which(tar_est2 == max(tar_est2))]; tar_est2[which(tar_est2 == max(tar_est2))]
+hora[which(tar_est2 == min(tar_est2))]; tar_est2[which(tar_est2 == min(tar_est2))]
+
+# Método de resolução 2
+for (i in 1:24) {
+  if (tar_est1[i]==max(tar_est1)){
+    print(paste("Horário da ocorrência da temperatura máxima (est1)",horas[i]))
+  }
+  if (tar_est1[i]==min(tar_est1)){
+    print(paste("Horário da ocorrência da temperatura mínima (est1)",horas[i]))
+  }
+}
+
+for (i in 1:24) {
+  if (tar_est2[i]==max(tar_est2)){
+    print(paste("Horário da ocorrência da temperatura máxima (est2)",horas[i]))
+  }
+  if (tar_est2[i]==min(tar_est2)){
+    print(paste("Horário da ocorrência da temperatura mínima (est2)",horas[i]))
+  }
+}
+
+# f
+t2=(tar_est2 > tar_est1) #est2 é mais quente
+t2=as.numeric(t2)
+MDA=max(abs(tar_est2[t2==1]-tar_est1[t2==1]))
+
+# g
+dif=cbind(t2[8:17],horas[8:17],abs(tar_est2[t2==1]-tar_est1[t2==1]))
+colnames(dif)<-c("T2>","Horas","Diferenças")
+dif
+
+for (i in 1:dim(dif)[1]) {
+  if (dif[i,3]==MDA){
+    print(dif[i,2])
+  }
+}
+
+
+# h
+# para a estação 1
+hps1=NULL
+for (i in 1:23) {
+  hps1[i]=tar_est1[i+1]-tar_est1[i]
+}
+#hps1
+hps_novo1=c(0,hps1)
+hps_novo1=cbind(horas,tar_est1,hps_novo1)
+
+for (i in 1:dim(hps_novo1)[1]) {
+  if (hps_novo1[i,3]==min(hps_novo1)){
+    print(paste("O horário do por do sol da estação 1 é:", hps_novo1[[i,1]], "horas"))
+  }
+}
+
+# para a estação 2
+hps2=NULL
+for (i in 1:23) {
+  hps2[i]=tar_est2[i+1]-tar_est2[i]
+}
+#hps2
+hps_novo2=c(0,hps2)
+hps_novo2=cbind(horas,tar_est2,hps_novo2)
+
+for (i in 1:dim(hps_novo2)[1]) {
+  if (hps_novo2[i,3]==min(hps_novo2)){
+    print(paste("O horário do por do sol da estação 2 é:", hps_novo2[[i,1]], "horas"))
+  }
+}
+
+# i
+d=tar_est1-tar_est2
+mp=cbind(tar_est1,tar_est2,d,abs(d)<0.5,horas)
+colnames(mp)=c("est1","est2","d","<0.5","horas")
+#mp
+
+for (i in 1:dim(mp)[1]) {
+  if (mp[i,4]==1){
+    print(paste("As temperaturas são próximas às:", mp[[i,5]], "horas"))
+  }
+}
+
+# j
+tar_met1=(max(tar_est2)+min(tar_est2))/2
+tar_met2=(max(tar_est2)+min(tar_est2)+tar_est2[9]+2*tar_est2[21])/5
+tar_met3=(tar_est2[7]+tar_est2[14]+2*tar_est2[21])/4
+
+# k
+# O resultado obtido no ítem 9A é mais condizente com a realidade dos dados 
+
+```
+
+
+```{r}
+# Questão 10
+# Qual o arg para a temperatura máxima??
+# Estação 1
+arg1=pi*((tar_est1[1:5]+10)/(10+min(tar_est1)))
+arg2=pi*((tar_est1[6:14]-min(tar_est1))/(14-min(tar_est1)))
+arg3=pi*((14-tar_est1[15:24])/(10+min(tar_est1)))
+arg=c(arg1,arg2,arg3)
+
+A=(max(tar_est1)-min(tar_est1))/2
+TE=(max(tar_est1)+min(tar_est1))/2
+TC1_est1=TE-A*arg[1:15]
+TC2_est1=TE+A*arg[16:24]
+TC_est1=c(TC1_est1,TC2_est1)
+
+install.packages("Metrics")
+library("Metrics")
+rmse(TC_est1,tar_est1)
+cor(tar_est1,TC_est1)
+
+# Estação 2
+arg1=pi*((tar_est2[1:5]+10)/(10+min(tar_est2)))
+arg2=pi*((tar_est2[6:14]-min(tar_est2))/(14-min(tar_est2)))
+arg3=pi*((14-tar_est2[15:24])/(10+min(tar_est2)))
+arg=c(arg1,arg2,arg3)
+
+A=(max(tar_est2)-min(tar_est2))/2
+TE=(max(tar_est2)+min(tar_est2))/2
+TC1_est2=TE-A*arg[1:15]
+TC2_est2=TE+A*arg[16:24]
+TC_est2=c(TC1_est2,TC2_est2)
+
+install.packages("Metrics")
+library("Metrics")
+rmse(TC_est2,tar_est2)
+cor(tar_est2,TC_est2)
+```
+
+```{r}
+# Questão 11
+# a
+hora=9:21
+prec=c(rep(0,7),21.4,41.2,2.6,1.0,0.4,0)
+cbind(hora,prec)
+prec_acum=cumsum(prec)
+diferenças=c(0, diff(prec_acum))
+
+#O vetor abaixo retorna as diferenças entre as observações atuais e as observações
+#anteriores considerando que não é possível ter a diferença da primeira observação 
+#pois não existe observação anterior a primeira, portanto admite-se NA.
+c(NA, diff(prec_acum))
+
+# b
+hora[which(prec == max(prec))]
+
+# c
+ps=hora[which(diferenças >= mean(diferenças))]
+ps
+ps[length(ps)]-ps[1]
+
+# d
+sum(prec)
+
+prec_relativa=prec/sum(prec)*100
+cbind(hora,prec,prec_acum,prec_relativa)
+prec_relativa[which(hora == 17)]
+```
+
+
+```{r}
+# Questão 12
+x<-c(16,-34,-48,16,-41,-48,-47,-48,33,-46,1,-29,31,-3,-34,38,24,-10,-28,15,-16,-44,38,-28,49,-23,-29,0,-14,-33,-26,-15,-4,-1,34,2,-31,36,-49,24,23,-1,-44,-30,-32,35,-21,-31,-50,1,31,13,22,13,40,26,-22,19,46,31,-44,-29,-5,12,-42,48,-49,-31,36,-3,5,40,28,42,-7,-7,-33,33,4,-42,-34,-42,-8,4,-40,-6,47,-38,25,-13,-30,-41,-1,-27,0,-21,-21,15,15,37,40,42,-19,25,2,-15,-27,-6,21,-16,-13,-42,-14,6,-7,28,49,-41,7,-26,37,43,-11,-22,-15,22,-23,-33,39,4,-34,7,-42,20,10,-21,-27,-36,2,-5,-42,-32,-15)
+resposta_dada<-c(16,33,1,31,38,15,38,49,34,36,24,35,1,19,12,48,36,5,33,4,47,25,15,25,21,6,28,7,37,22,39,7,20,2)
+y <- ifelse(x > 0,1,0)
+z <- c(-1000,diff(y))
+df <- data.frame(x,y,z)
+q <- df$x[df$z == 1]; q
+```
+
+
+```{r}
+# Questão 13
+prec <- c(
+  0, 0, 0, 0.8, 0, 0.01, 0.75, 0,
+  0, 0, 0, 0.35, 0.08, 0, 0, 0, 0, 0.31, 0, 3.57, 12.17, 0, 0,
+  0, 0.04, 3.16, 0, 0.95, 0.79, 0, 0, 0, 0, 0, 3.51, 0, 0, 0.16,
+  0, 0, 8.16, 0.54, 4.39, 1.24, 0, 0, 0, 0, 0, 2.43, 0, 0, 0, 0,
+  0, 7.18, 0, 0, 0.26, 0, 0, 0.28, 0, 0, 0.09, 0.38, 0, 0, 0, 0,
+  0, 0, 0.51, 0, 0, 0, 0, 0, 0, 0.67, 0, 0, 0, 0, 0.15, 0, 0.82,
+  0, 0, 0, 0, 0, 0, 0, 0, 0.37, 0, 0.58, 4.95, 0, 0, 0, 0, 0, 7.68,
+  0, 0, 0.37, 0, 1.56, 0, 0, 0, 0.34, 0.48, 0, 4.21, 2.28, 4.3,
+  0, 3.38, 0, 0, 0, 0, 7.28, 0, 4.89, 3.91, 0, 0, 0, 0, 0, 0, 2.93,
+  0, 2.49, 0.77, 0, 2.9, 3.53, 0.83, 0, 0, 0, 0.94, 0.59, 0, 0,
+  0, 0, 0.04, 0, 0.65, 0, 0, 0, 6.23, 0.09, 0, 0.66, 0, 0, 0, 4.42,
+  0, 0, 0, 0.84, 0, 0, 0, 0, 0, 0.09, 0, 0, 0.08, 0, 0.66, 0, 0,
+  0, 0.06, 0, 0, 0, 3.28, 0, 0.8, 5.69, 0.8, 0
+)
+
+# a
+sum(ifelse(prec>0 & prec<0.25,1,0))
+
+# b
+prec2<-ifelse(prec>0 & prec<0.25,0,prec)
+prec2
+
+# c
+prec01<-ifelse(prec<0.25,0,1)
+prec01
+
+# d
+prob<-ifelse(prec>0,1,0)
+sum(prob)/length(prob)*100 #Resultado em %
+
+# e
+
+# f
+duracao <- c(evento1 = 1, evento2 = 1, evento3 = 1, evento4 = 1, evento5 = 2, 
+             evento6 = 1, evento7 = 2, evento8 = 1, evento9 = 4, evento10 = 1, 
+             evento11 = 1, evento12 = 1, evento13 = 1, evento14 = 1, evento15 = 1, 
+             evento16 = 1, evento17 = 1, evento18 = 1, evento19 = 2, evento20 = 1, 
+             evento21 = 1, evento22 = 1, evento23 = 2, evento24 = 3, evento25 = 1, 
+             evento26 = 1, evento27 = 2, evento28 = 1, evento29 = 2, evento30 = 3, 
+             evento31 = 2, evento32 = 1, evento33 = 1, evento34 = 1, evento35 = 1, 
+             evento36 = 1, evento37 = 1, evento38 = 1, evento39 = 3)
+duracao
+
+```
+
+```{r}
+# Questão 14
+dados <- c(
+  NA, NA, 27L, 7L, 4L, 0L, 26L, 15L, 25L, NA, NA, NA, NA, 6L,
+  29L, 18L, 17L, 23L, 20L, 1L, 30L, 13L, NA, NA, NA, NA, NA, NA,
+  NA, 19L
+)
+```
+
+
+```{r}
+# Questão 15
+# a
+vh=c(10, 10, 10, 10, 14.142, 14.142, 14.142, 14.142, 0)
+theta=c(270, 180, 360, 90, 225, 315, 135, 45, 0)
+u=-vh*sin(theta)
+v=-vh*cos(theta)
+
+theta_mat=atan2(-u,-v)*180/pi
+
+# b
+vh_novo=sqrt(u^2+v^2)
+
+```
+
+```{r}
+# Questão 17
+v_obs <- c(
+  -0.49, 0.27, -0.48, 0.8, -1, 0.1, -1.16,
+  0.58, -1.6, -0.31, 0.45, -0.98, 0.19, 0.73,
+  -0.49, -0.04, -0.11, 0.46, 2.02, -1.05
+)
+v_prev <- c(
+  NA, -0.49, 0.27, -0.48, 0.8, -1, 0.1, -1.16,
+  0.58, -1.6, -0.31, 0.45, -0.98, 0.19, 0.73,
+  -0.49, -0.04, -0.11, 0.46, 2.02
+)
+v_prev2=na.contiguous(v_prev)[1:20-sum(is.na(v_prev))]
+
+install.packages("hydroGOF")
+library("hydroGOF")
+bias(v_obs[1:length(v_prev2)],v_prev2[1:length(v_prev2)]) #ótimo
+NSE(v_obs[1:length(v_prev2)],v_prev2[1:length(v_prev2)]) #ótimo
+
+```
+
+
